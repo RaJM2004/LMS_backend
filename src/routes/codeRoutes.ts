@@ -18,7 +18,9 @@ router.post('/execute', (req, res) => {
         return res.status(400).json({ output: "Only Python language is supported currently." });
     }
 
-    const tempDir = path.join(__dirname, '../../temp');
+    const tempDir = process.env.VERCEL
+        ? '/tmp'
+        : path.join(__dirname, '../../temp');
     if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir);
     }
