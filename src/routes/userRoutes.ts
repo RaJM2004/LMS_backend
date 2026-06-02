@@ -168,7 +168,7 @@ router.post('/progress', async (req, res) => {
             if (!user.quizScores) user.quizScores = [] as any;
 
             // Remove existing score for this module if any to update with latest
-            user.quizScores = user.quizScores.filter(q => q.moduleId !== moduleId) as any;
+            user.quizScores = user.quizScores.filter((q: any) => q.moduleId !== moduleId) as any;
 
             user.quizScores.push({
                 moduleId,

@@ -5,7 +5,7 @@
     "scripts": {
         "start": "node dist/src/index.js",
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-        "build": "python -m pip install -r requirements.txt && tsc"
+        "build": "tsc"
     },
     "dependencies": {
         "@types/uuid": "^11.0.0",
@@ -23,6 +23,7 @@
         "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
         "@types/node": "^20.12.7",
+        "@types/node-fetch": "^2.6.11",
         "@types/nodemailer": "^7.0.4",
         "ts-node-dev": "^2.0.0",
         "typescript": "^5.4.5"
