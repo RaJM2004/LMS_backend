@@ -44,12 +44,19 @@ mongoose.connection.on('error', err => {
     console.error('Mongoose connection-level error:', err);
 });
 
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log('MongoDB connected');
-        console.log('Database Name:', mongoose.connection.name);
-    })
-    .catch(err => console.error('MongoDB connection error:', err));
+const maskedMongoUri = MONGO_URI.replace(/:([^@]+)@/, ':******@');
+console.log(`Connecting to MongoDB URI: ${maskedMongoUri}`);
+
+try {
+    mongoose.connect(MONGO_URI)
+        .then(() => {
+            console.log('MongoDB connected');
+            console.log('Database Name:', mongoose.connection.name);
+        })
+        .catch(err => console.error('MongoDB connection error:', err));
+} catch (connectError) {
+    console.error('Synchronous Mongoose connection error during startup:', connectError);
+}
 
 import courseRoutes from './routes/courseRoutes';
 import chatRoutes from './routes/chatRoutes';
