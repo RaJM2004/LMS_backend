@@ -17,7 +17,7 @@ export const modulesData = [
     ...cqvModules
 ];
 
-export const modulesDataHindi = [
+export const modulesDataHindi: any[] = [
     {
         id: 'module-1',
         courseId: 'python-ai-course',
@@ -95,7 +95,7 @@ Square of 5: 25`,
     }
 ];
 
-export const modulesDataKannada = [
+export const modulesDataKannada: any[] = [
     {
         id: 'module-1',
         courseId: 'python-ai-course',
