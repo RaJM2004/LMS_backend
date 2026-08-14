@@ -27,6 +27,7 @@ router.post('/create-order', async (req, res) => {
         let rawCourseId = courseData?.course || 'python-ai-course';
         if (rawCourseId === 'Python Programming for AI') rawCourseId = 'python-ai-course';
         if (rawCourseId === 'Neural Networks & Deep Learning') rawCourseId = 'neural-networks-course';
+        if (rawCourseId === 'Commissioning Qualification and Validation (CQV) Consulting') rawCourseId = 'cqv-course';
 
         // Save Order to DB
         const newOrder = new Order({
