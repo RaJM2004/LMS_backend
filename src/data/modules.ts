@@ -3,6 +3,7 @@ import { nnModules } from './courses/neural_networks';
 import { aiCoreModules } from './courses/ai_core';
 import { domainSpecificModules } from './courses/domain_specific';
 import { cqvModules } from './courses/cqv';
+import { curaquantisModules } from './courses/curaquantis';
 
 // NOTE: This file is used for INITIAL SEEDING of the MongoDB database.
 // Once the application runs and seeds the database, the 'live' data is served from MongoDB.
@@ -14,7 +15,8 @@ export const modulesData = [
     ...nnModules,
     ...aiCoreModules,
     ...domainSpecificModules,
-    ...cqvModules
+    ...cqvModules,
+    ...curaquantisModules
 ];
 
 export const modulesDataHindi: any[] = [
