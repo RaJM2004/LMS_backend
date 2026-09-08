@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import { Order } from '../models/Order';
 import { User } from '../models/User';
+import { Coupon } from '../models/Coupon';
 import nodemailer from 'nodemailer';
 
 dotenv.config();
@@ -18,7 +19,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'https://lms-frontend-blue-mu.v
 
 router.post('/create-order', async (req, res) => {
     try {
-        const { amount, email, phone, courseData } = req.body;
+        const { amount, email, phone, courseData, couponCode } = req.body;
         const frontEndUrl = req.get('origin') || process.env.FRONTEND_URL || 'https://lms-frontend-blue-mu.vercel.app';
 
         const orderId = "ORDER_" + uuidv4().slice(0, 8).toUpperCase();
@@ -30,20 +31,44 @@ router.post('/create-order', async (req, res) => {
         if (rawCourseId === 'Commissioning Qualification and Validation (CQV) Consulting') rawCourseId = 'cqv-course';
         if (rawCourseId === 'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program') rawCourseId = 'curaquantis-course';
 
+        // Handle Coupon
+        let finalAmount = amount || 1.00;
+        let discountAmount = 0;
+        
+        if (couponCode) {
+            const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() });
+            if (coupon && coupon.isActive) {
+                const now = new Date();
+                if (now >= coupon.validFrom && now <= coupon.validUntil) {
+                    if (!coupon.usageLimit || coupon.usedCount < coupon.usageLimit) {
+                        if (coupon.discountType === 'FLAT') {
+                            discountAmount = coupon.discountValue;
+                        } else if (coupon.discountType === 'PERCENTAGE') {
+                            discountAmount = (finalAmount * coupon.discountValue) / 100;
+                        }
+                        discountAmount = Math.min(discountAmount, finalAmount);
+                        finalAmount = Math.max(0, finalAmount - discountAmount);
+                    }
+                }
+            }
+        }
+
         // Save Order to DB
         const newOrder = new Order({
             orderId,
-            amount: amount || 1.00,
+            amount: finalAmount, // Save the final discounted amount
             customerEmail: email,
             customerPhone: phone,
             customerName: courseData?.name || 'Student',
             courseId: rawCourseId,
-            status: 'PENDING'
+            status: 'PENDING',
+            couponCode: couponCode || null,
+            discountAmount
         });
         await newOrder.save();
 
         const payload = {
-            order_amount: amount || 1.00,
+            order_amount: finalAmount,
             order_currency: "INR",
             order_id: orderId,
             customer_details: {
@@ -137,6 +162,14 @@ router.post('/check-payment-status', async (req, res) => {
             if (data.order_status) {
                 order.status = data.order_status;
                 await order.save();
+                
+                // If payment just became successful, update coupon usage
+                if (order.status === 'PAID' && order.couponCode) {
+                    await Coupon.findOneAndUpdate(
+                        { code: order.couponCode },
+                        { $inc: { usedCount: 1 } }
+                    );
+                }
             }
         }
 

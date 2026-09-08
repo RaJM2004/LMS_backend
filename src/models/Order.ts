@@ -12,6 +12,8 @@ const orderSchema = new mongoose.Schema({
     customerPhone: { type: String },
     customerName: { type: String },
     emailSent: { type: Boolean, default: false },
+    couponCode: { type: String },
+    discountAmount: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
 });
 
