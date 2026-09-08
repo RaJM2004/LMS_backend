@@ -80,7 +80,8 @@ router.post('/referral', async (req, res) => {
         }
 
         // Generate code based on first name + random number
-        const firstName = user.name ? user.name.split(' ')[0].toUpperCase().replace(/[^A-Z]/g, '') : 'REF';
+        const name = (user as any).fullName || (user as any).name;
+        const firstName = name ? name.split(' ')[0].toUpperCase().replace(/[^A-Z]/g, '') : 'REF';
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         const code = `${firstName}${randomNum}`;
 
