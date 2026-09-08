@@ -79,7 +79,12 @@ app.use('/api/code', codeRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/certificate', certificateRoutes);
 import assessmentRoutes from './routes/assessmentRoutes';
+import couponRoutes from './routes/couponRoutes';
 app.use('/api/assessment', assessmentRoutes);
+app.use('/api/coupons', couponRoutes);
+
+import courseMetadataRoutes from './routes/courseMetadataRoutes';
+app.use('/api/course-metadata', courseMetadataRoutes);
 
 app.use('/api/instructor', instructorRoutes);
 
