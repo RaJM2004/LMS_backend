@@ -60,11 +60,32 @@ router.post('/register', async (req, res) => {
                                     <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumar (Ex-Palantir &amp; Systems Architect)</p>
                                 </div>
                                 <p style="color: #475569;">Here are your instant access resources:</p>
-                                <ul>
-                                    <li><a href="https://genquantaa.com/FDE%20Brochure.pdf" style="color: #0f269a; font-weight: bold;">Download FDE Course Brochure PDF</a></li>
-                                    <li><a href="https://genquantaa.com/FDE%20PPT.pdf" style="color: #7c3aed; font-weight: bold;">View FDE Presentation PPT Deck</a></li>
-                                    <li><a href="https://youtu.be/KehyaPw5Mmg" style="color: #d97706; font-weight: bold;">Watch Masterclass Recorded Video</a></li>
-                                </ul>
+                                <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="padding: 6px 0;">
+                                            <a href="https://academy.genquantaa.com/FDE%20Brochure.pdf"
+                                               style="display: block; background: #0f269a; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
+                                                📄 Download FDE Course Brochure (PDF)
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 0;">
+                                            <a href="https://academy.genquantaa.com/FDE%20PPT.pdf"
+                                               style="display: block; background: #7c3aed; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
+                                                📊 View FDE Presentation Deck (PPT)
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 0;">
+                                            <a href="https://youtu.be/KehyaPw5Mmg"
+                                               style="display: block; background: #d97706; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
+                                                🎬 Watch Masterclass Recorded Video
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <p style="color: #94a3b8; font-size: 12px; margin-top: 30px;">
                                     GenQuantaa Academy — Transforming SDEs into High-Impact Forward Deployed Engineers.
                                 </p>
