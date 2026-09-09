@@ -5,9 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { Order } from '../models/Order';
 import { User } from '../models/User';
 import { Coupon } from '../models/Coupon';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const FROM_ADDRESS = 'GenQuantaa Academy <academy@academy.genquantaa.com>';
+
 
 const router = express.Router();
 
@@ -183,21 +187,13 @@ router.post('/check-payment-status', async (req, res) => {
                 }
                 await user.save();
 
-                // Send Confirmation Email only if not already sent
+                // Send Confirmation Email via Resend (HTTPS, works on Render)
                 if (!order.emailSent) {
                     try {
-                        const transporter = nodemailer.createTransport({
-                            service: 'gmail',
-                            auth: {
-                                user: process.env.EMAIL_USER,
-                                pass: process.env.EMAIL_PASS
-                            }
-                        });
-
-                        const mailOptions = {
-                            from: process.env.EMAIL_USER,
-                            to: user.email,
-                            subject: 'Payment Successful - Welcome to Zerokost!',
+                        const { error: emailError } = await resend.emails.send({
+                            from: FROM_ADDRESS,
+                            to: [user.email],
+                            subject: 'Payment Successful - Welcome to GenQuantaa Academy!',
                             html: `
                                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
                                     <h2 style="color: #10b981; text-align: center;">Payment Successful!</h2>
@@ -219,19 +215,20 @@ router.post('/check-payment-status', async (req, res) => {
                                     <p style="font-size: 14px; color: #2563eb;">${FRONTEND_URL}/login</p>
 
                                     <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                                    <p style="font-size: 12px; color: #999; text-align: center;">&copy; ${new Date().getFullYear()} Zerokost. All rights reserved.</p>
+                                    <p style="font-size: 12px; color: #999; text-align: center;">&copy; ${new Date().getFullYear()} GenQuantaa Academy. All rights reserved.</p>
                                 </div>
                             `
-                        };
+                        });
 
-                        await transporter.sendMail(mailOptions);
-
-                        // Update Order to reflect email sent
-                        order.emailSent = true;
-                        await order.save();
-
-                    } catch (emailError) {
-                        // Silently fail or log to file system if needed, but removing console log as requested
+                        if (!emailError) {
+                            order.emailSent = true;
+                            await order.save();
+                            console.log(`Payment confirmation email sent to ${user.email}`);
+                        } else {
+                            console.error('Resend error (payment confirmation):', emailError);
+                        }
+                    } catch (emailErr) {
+                        console.error('Payment email dispatch error:', emailErr);
                     }
                 }
             }

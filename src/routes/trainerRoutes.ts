@@ -1,8 +1,11 @@
 import express from 'express';
 import TrainerApplication from '../models/TrainerApplication';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 const router = express.Router();
+const resend = new Resend(process.env.RESEND_API_KEY);
+const FROM_ADDRESS = 'GenQuantaa Academy <academy@academy.genquantaa.com>';
+const ADMIN_EMAIL = 'academy@genquantaa.com';
 
 router.post('/apply', async (req, res) => {
     try {
@@ -47,42 +50,34 @@ router.post('/apply', async (req, res) => {
 
         await newApplication.save();
 
-        // Send Email using NodeMailer
-        try {
-            const transporter = nodemailer.createTransport({
-                service: 'gmail', // or use host/port if using a different provider
-                auth: {
-                    user: process.env.SMTP_USER,
-                    pass: process.env.SMTP_PASS
+        // Send admin notification via Resend (HTTPS, never blocked by Render)
+        (async () => {
+            try {
+                const { error } = await resend.emails.send({
+                    from: FROM_ADDRESS,
+                    to: [ADMIN_EMAIL],
+                    subject: `New Trainer Application: ${firstName} ${lastName}`,
+                    html: `
+                        <h2>New Trainer / Partner Application</h2>
+                        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Phone:</strong> ${phone}</p>
+                        <p><strong>Company:</strong> ${companyName || 'N/A'}</p>
+                        <p><strong>Program of Interest:</strong> ${programOfInterest}</p>
+                        <p><strong>Partnership Interest:</strong> ${partnershipInterest}</p>
+                        <p>Please check the admin dashboard for full details.</p>
+                    `
+                });
+
+                if (error) {
+                    console.error('Resend error (trainer application):', error);
+                } else {
+                    console.log(`Trainer application notification sent for ${firstName} ${lastName}`);
                 }
-            });
-
-            const mailOptions = {
-                from: process.env.SMTP_USER,
-                to: 'academy@genquantaa.com',
-                subject: `New Trainer Application: ${firstName} ${lastName}`,
-                html: `
-                    <h2>New Trainer / Partner Application</h2>
-                    <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Phone:</strong> ${phone}</p>
-                    <p><strong>Company:</strong> ${companyName || 'N/A'}</p>
-                    <p><strong>Program of Interest:</strong> ${programOfInterest}</p>
-                    <p><strong>Partnership Interest:</strong> ${partnershipInterest}</p>
-                    <p>Please check the admin dashboard for full details.</p>
-                `
-            };
-
-            // Only attempt to send if SMTP credentials are provided, to prevent server crash on dev environment
-            if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-                await transporter.sendMail(mailOptions);
-            } else {
-                console.warn('SMTP credentials not provided in .env, skipping email notification.');
+            } catch (emailError) {
+                console.error('Error sending trainer application email:', emailError);
             }
-        } catch (emailError) {
-            console.error('Error sending email notification:', emailError);
-            // We don't fail the request if email fails, as the data is saved
-        }
+        })();
 
         res.status(201).json({ message: 'Application submitted successfully', application: newApplication });
 
