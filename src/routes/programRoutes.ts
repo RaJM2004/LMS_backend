@@ -28,7 +28,7 @@ function getEmailTransporter() {
             senderEmail: process.env.SMTP_USER
         };
     }
-    
+
     // Fallback to Gmail SMTP with timeouts
     return {
         transporter: nodemailer.createTransport({
@@ -215,7 +215,7 @@ router.post('/track', async (req, res) => {
         // Increment aggregate counter atomically
         const analytics = await ProgramAnalytics.findOneAndUpdate(
             { programId: 'fde_masterclass' },
-            { 
+            {
                 $inc: { [fieldToInc]: 1 },
                 $set: { lastUpdated: new Date() }
             },
