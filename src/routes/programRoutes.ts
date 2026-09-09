@@ -9,7 +9,7 @@ const router = express.Router();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // From address: use verified domain sender if available, else Resend's shared test sender
-const FROM_ADDRESS = 'GenQuantaa Academy <academy@genquantaa.com>';
+const FROM_ADDRESS = 'GenQuantaa Academy <academy@academy.genquantaa.com>';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'academy@genquantaa.com';
 
 // POST /api/program/register
