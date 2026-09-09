@@ -6,6 +6,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes';
+import trainerRoutes from './routes/trainerRoutes';
 
 
 const app = express();
@@ -86,7 +87,11 @@ app.use('/api/coupons', couponRoutes);
 import courseMetadataRoutes from './routes/courseMetadataRoutes';
 app.use('/api/course-metadata', courseMetadataRoutes);
 
+import programRoutes from './routes/programRoutes';
+
 app.use('/api/instructor', instructorRoutes);
+app.use('/api/trainer', trainerRoutes);
+app.use('/api/program', programRoutes);
 
 
 // Temporary Dev Route to Setup User
