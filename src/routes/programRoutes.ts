@@ -58,7 +58,7 @@ router.post('/register', async (req, res) => {
                                     <h4 style="margin-top: 0; color: #1e293b;">📅 Masterclass Details</h4>
                                     <p style="margin: 5px 0;"><strong>Date:</strong> 30th Sept 2026 (Wed)</p>
                                     <p style="margin: 5px 0;"><strong>Time:</strong> 7:30 PM - 10:00 PM IST</p>
-                                    <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumaar (Ex-Palantir &amp; Systems Architect)</p>
+                                    <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumaar (Ex-HCL, Ex-Palantir &amp; Systems Architect)</p>
                                 </div>
                                 <p style="color: #475569;">Here are your instant access resources:</p>
                                 <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
