@@ -15,16 +15,17 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'academy@genquantaa.com';
 // POST /api/program/register
 router.post('/register', async (req, res) => {
     try {
-        const { email, fullName, graduationYear, jobTitle, program } = req.body;
+        const { email, fullName, phone, graduationYear, jobTitle, program } = req.body;
 
-        if (!email || !fullName) {
-            return res.status(400).json({ error: 'Email and Full Name are required.' });
+        if (!email || !fullName || !phone) {
+            return res.status(400).json({ error: 'Email, Full Name, and Phone are required.' });
         }
 
         // 1. ALWAYS SAVE REAL DATA TO MONGODB DATABASE
         const registration = new ProgramRegistration({
             email,
             fullName,
+            phone,
             graduationYear: graduationYear || 'N/A',
             jobTitle: jobTitle || 'N/A',
             program: program || 'Forward Deployed Engineering'
@@ -51,13 +52,13 @@ router.post('/register', async (req, res) => {
                             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
                                 <h2 style="color: #0f269a;">Welcome to GenQuantaa FDE Masterclass, ${fullName}!</h2>
                                 <p style="color: #475569; font-size: 15px; line-height: 1.6;">
-                                    Thank you for registering for the <strong>Forward Deployed Engineer (FDE) Masterclass</strong> led by <strong>Ashwin Kumar</strong>.
+                                    Thank you for registering for the <strong>Forward Deployed Engineer (FDE) Masterclass</strong> led by <strong>Ashwin Kumaar</strong>.
                                 </p>
                                 <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
                                     <h4 style="margin-top: 0; color: #1e293b;">📅 Masterclass Details</h4>
                                     <p style="margin: 5px 0;"><strong>Date:</strong> 30th Sept 2026 (Wed)</p>
                                     <p style="margin: 5px 0;"><strong>Time:</strong> 7:30 PM - 10:00 PM IST</p>
-                                    <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumar (Ex-Palantir &amp; Systems Architect)</p>
+                                    <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumaar (Ex-Palantir &amp; Systems Architect)</p>
                                 </div>
                                 <p style="color: #475569;">Here are your instant access resources:</p>
                                 <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
@@ -102,6 +103,7 @@ router.post('/register', async (req, res) => {
                             <h2>New FDE Masterclass Registration Lead</h2>
                             <p><strong>Name:</strong> ${fullName}</p>
                             <p><strong>Email:</strong> ${email}</p>
+                            <p><strong>Phone:</strong> ${phone}</p>
                             <p><strong>Graduation Year:</strong> ${graduationYear || 'N/A'}</p>
                             <p><strong>Job Title:</strong> ${jobTitle || 'N/A'}</p>
                             <p><strong>Program:</strong> ${program || 'Forward Deployed Engineering'}</p>

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const programRegistrationSchema = new mongoose.Schema({
     email: { type: String, required: true },
     fullName: { type: String, required: true },
+    phone: { type: String, required: true },
     graduationYear: { type: String, required: true },
     jobTitle: { type: String, required: true },
     program: { type: String, required: true, default: 'Forward Deployed Engineering' },
