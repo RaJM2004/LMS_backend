@@ -48,25 +48,6 @@ router.get('/', async (req, res) => {
         // Fetch modules from DB
         let allModules = await Module.find({}).sort({ order: 1 });
 
-        // Language Handling (Legacy Static for now, until DB supports Multi-lang)
-        if (lang === 'HINDI') {
-            const hindiModules = allModules.map(dbMod => {
-                const staticMod = modulesDataHindi.find(m => m.id === dbMod.id);
-                if (staticMod) return { ...dbMod.toObject(), ...staticMod };
-                return dbMod.toObject();
-            });
-            res.json(hindiModules);
-            return;
-        } else if (lang === 'KANNADA') {
-            const kannadaModules = allModules.map(dbMod => {
-                const staticMod = modulesDataKannada.find(m => m.id === dbMod.id);
-                if (staticMod) return { ...dbMod.toObject(), ...staticMod };
-                return dbMod.toObject();
-            });
-            res.json(kannadaModules);
-            return;
-        }
-
         // Seed DB if empty or missing modules
         const dbModuleIds = new Set(allModules.map(m => m.id));
         const missingModules = modulesData.filter(m => !dbModuleIds.has(m.id));
@@ -78,23 +59,19 @@ router.get('/', async (req, res) => {
             console.log(`Seeded ${missingModules.length} new modules to DB.`);
         }
 
-        // --- FIX: Sync missing MCQs from static data to DB ---
-        // This handles the case where DB modules exist but are from an older seed without MCQs
+        // --- Sync missing MCQs from static data to DB ---
         const dbModulesMap = new Map(allModules.map(m => [m.id, m]));
         const updates = [];
 
         for (const staticMod of modulesData) {
             const dbMod = dbModulesMap.get(staticMod.id);
             if (dbMod) {
-                // Check if DB module is missing MCQs (or empty) but static has them
-                // We use 'any' cast because Mongoose documents might not strict check field existence in pure TS
                 const dbMcqs = (dbMod as any).mcqs;
                 if ((!dbMcqs || dbMcqs.length === 0) && staticMod.mcqs && staticMod.mcqs.length > 0) {
-                    console.log(`Syncing MCQs for module ${staticMod.id}...`);
                     updates.push({
                         updateOne: {
                             filter: { id: staticMod.id },
-                            update: { $set: { mcqs: staticMod.mcqs, code: staticMod.code, output: staticMod.output } } // Also sync code/output just in case
+                            update: { $set: { mcqs: staticMod.mcqs, code: staticMod.code, output: staticMod.output } }
                         }
                     });
                 }
@@ -103,10 +80,8 @@ router.get('/', async (req, res) => {
 
         if (updates.length > 0) {
             await Module.bulkWrite(updates);
-            allModules = await Module.find({}).sort({ order: 1 }); // Refetch after updates
-            console.log(`Synced properties for ${updates.length} modules.`);
+            allModules = await Module.find({}).sort({ order: 1 });
         }
-        // ----------------------------------------------------
 
         // Determine Allowed Courses
         let filteredModules = allModules;
@@ -116,7 +91,13 @@ router.get('/', async (req, res) => {
             if (email) {
                 const user = await User.findOne({ email });
                 if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
-                    allowedCourses = user.enrolledCourses;
+                    const titleToIdMap: Record<string, string> = {
+                        'Python Programming for AI': 'python-ai-course',
+                        'Neural Networks & Deep Learning': 'neural-networks-course',
+                        'Commissioning Qualification and Validation (CQV) Consulting': 'cqv-course',
+                        'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program': 'curaquantis-course'
+                    };
+                    allowedCourses = user.enrolledCourses.map(c => titleToIdMap[c] || c);
                 } else if (user && user.isPaid) {
                     allowedCourses = ['python-ai-course'];
                 }
@@ -129,10 +110,27 @@ router.get('/', async (req, res) => {
             });
         }
 
-        // Sort by order
-        filteredModules.sort((a: any, b: any) => a.order - b.order);
+        // Apply Language Translation to filtered modules
+        let resultModules = filteredModules.map(m => (m as any).toObject ? (m as any).toObject() : m);
 
-        res.json(filteredModules);
+        if (lang === 'HINDI') {
+            resultModules = resultModules.map(dbMod => {
+                const staticMod = modulesDataHindi.find(m => m.id === dbMod.id);
+                if (staticMod) return { ...dbMod, ...staticMod };
+                return dbMod;
+            });
+        } else if (lang === 'KANNADA') {
+            resultModules = resultModules.map(dbMod => {
+                const staticMod = modulesDataKannada.find(m => m.id === dbMod.id);
+                if (staticMod) return { ...dbMod, ...staticMod };
+                return dbMod;
+            });
+        }
+
+        // Sort by order
+        resultModules.sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+
+        res.json(resultModules);
     } catch (error) {
         console.error("Error fetching modules from DB:", error);
         res.status(500).json({ message: "Internal Server Error" });

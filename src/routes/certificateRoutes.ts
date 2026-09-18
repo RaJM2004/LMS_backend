@@ -46,13 +46,14 @@ router.post('/issue', async (req, res) => {
         console.log("User found for certificate issuance:", user._id);
 
         // --- PASS VERIFICATION ---
-        // Ensure user has actually passed with 85%+ for this specific course
+        // Ensure user has actually passed with 85%+ or has overall course progress >= 80%
         const assessment = user.courseAssessments?.find((a: any) => a.courseId === courseId);
         const legacyPassed = (courseId === 'python-ai-course' || !courseId) && user.finalAssessment?.passed;
+        const progressPassed = (user.progress || 0) >= 80;
 
-        if (!assessment?.passed && !legacyPassed) {
-            console.warn(`Attempted to issue certificate for ${email} but they haven't passed ${courseId || courseName}`);
-            return res.status(403).json({ message: 'Assessment not passed or score below 85%.' });
+        if (!assessment?.passed && !legacyPassed && !progressPassed) {
+            console.warn(`Attempted to issue certificate for ${email} but progress is ${user.progress || 0}%`);
+            return res.status(403).json({ message: 'Assessment not passed or course progress below 80%.' });
         }
 
         // Check if already issued

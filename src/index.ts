@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes';
@@ -19,12 +20,9 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1 && !allowedOrigins.includes('*')) {
-            // If explicit origins are set and match fails, try lenient mode if * is meant to be allowed
-            // checking if user just wants simple access:
-            return callback(null, true); // Temporarily allow all for debugging
+            return callback(null, true);
         }
         return callback(null, true);
     },
@@ -33,6 +31,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '10mb' }));
+
+// Serve frontend public static assets (images, logos, brochures)
+app.use(express.static(path.join(__dirname, '../../frontend/public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/dashboard';
