@@ -120,7 +120,17 @@ router.get('/leaderboard', async (req, res) => {
             .sort({ usedCount: -1 })
             .limit(10);
 
-        const realEntries = topCoupons.map((coupon, index) => {
+        interface LeaderboardItem {
+            rank: number;
+            name: string;
+            code: string;
+            referralsCount: number;
+            totalEarned: number;
+            badge: string;
+            email?: string;
+        }
+
+        const realEntries: LeaderboardItem[] = topCoupons.map((coupon, index) => {
             const user: any = coupon.generatedBy || {};
             const rawName = user.fullName || (user.email ? user.email.split('@')[0] : 'Ambassador');
             const nameParts = rawName.split(' ');
@@ -138,7 +148,7 @@ router.get('/leaderboard', async (req, res) => {
         });
 
         // Default inspiring sample referrers if real count is low
-        const defaultLeaderboard = [
+        const defaultLeaderboard: LeaderboardItem[] = [
           { rank: 1, name: "Rahul S.", code: "RAHUL99", referralsCount: 18, totalEarned: 9000, badge: "🥇 Gold Leader" },
           { rank: 2, name: "Priya Sharma", code: "PRIYA88", referralsCount: 14, totalEarned: 7000, badge: "🥈 Silver Ambassador" },
           { rank: 3, name: "Aniket K.", code: "ANIKET45", referralsCount: 11, totalEarned: 5500, badge: "🥉 Bronze Pioneer" },
@@ -147,7 +157,7 @@ router.get('/leaderboard', async (req, res) => {
         ];
 
         // Merge real entries with fallback if real entries are fewer than 3
-        let finalLeaderboard = realEntries;
+        let finalLeaderboard: LeaderboardItem[] = realEntries;
         if (realEntries.length < 3) {
             const existingCodes = new Set(realEntries.map(e => e.code));
             const fillIns = defaultLeaderboard.filter(d => !existingCodes.has(d.code));
