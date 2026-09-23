@@ -87,19 +87,20 @@ router.get('/', async (req, res) => {
         let filteredModules = allModules;
 
         if (req.query.all !== 'true') {
-            let allowedCourses: string[] = ['python-ai-course']; // Default fallback
+            let allowedCourses: string[] = ['no-code-low-code-ai-agents', 'python-ai-course', 'neural-networks-course', 'cqv-course', 'curaquantis-course']; // Default fallback
             if (email) {
-                const user = await User.findOne({ email });
+                const user = await User.findOne({ email: { $regex: new RegExp(`^${email.trim()}$`, 'i') } });
                 if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
                     const titleToIdMap: Record<string, string> = {
                         'Python Programming for AI': 'python-ai-course',
                         'Neural Networks & Deep Learning': 'neural-networks-course',
                         'Commissioning Qualification and Validation (CQV) Consulting': 'cqv-course',
-                        'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program': 'curaquantis-course'
+                        'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program': 'curaquantis-course',
+                        'No Code Low Code AI Agents': 'no-code-low-code-ai-agents'
                     };
-                    allowedCourses = user.enrolledCourses.map(c => titleToIdMap[c] || c);
+                    allowedCourses = Array.from(new Set(['no-code-low-code-ai-agents', ...user.enrolledCourses.map(c => titleToIdMap[c] || c)]));
                 } else if (user && user.isPaid) {
-                    allowedCourses = ['python-ai-course'];
+                    allowedCourses = ['no-code-low-code-ai-agents', 'python-ai-course'];
                 }
             }
 
@@ -127,8 +128,14 @@ router.get('/', async (req, res) => {
             });
         }
 
-        // Sort by order
-        resultModules.sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+        // Sort modules: Prioritize No Code AI Agents first, then sort by order
+        resultModules.sort((a: any, b: any) => {
+            const isANoCode = a.courseId === 'no-code-low-code-ai-agents';
+            const isBNoCode = b.courseId === 'no-code-low-code-ai-agents';
+            if (isANoCode && !isBNoCode) return -1;
+            if (!isANoCode && isBNoCode) return 1;
+            return (a.order || 0) - (b.order || 0);
+        });
 
         res.json(resultModules);
     } catch (error) {

@@ -34,6 +34,7 @@ router.post('/create-order', async (req, res) => {
         if (rawCourseId === 'Neural Networks & Deep Learning') rawCourseId = 'neural-networks-course';
         if (rawCourseId === 'Commissioning Qualification and Validation (CQV) Consulting') rawCourseId = 'cqv-course';
         if (rawCourseId === 'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program') rawCourseId = 'curaquantis-course';
+        if (rawCourseId === 'No Code Low Code AI Agents') rawCourseId = 'no-code-low-code-ai-agents';
 
         // Handle Coupon
         let finalAmount = amount || 1.00;
