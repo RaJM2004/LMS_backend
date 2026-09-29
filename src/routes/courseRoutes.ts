@@ -188,4 +188,243 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// LEVEL 1: Evaluate Section Assessment (10 MCQs)
+router.post('/section/evaluate', async (req, res) => {
+    try {
+        const { email, moduleId, sectionIndex, answers } = req.body;
+        // answers: { [questionIndex: number]: number }
+
+        if (!email || !moduleId || sectionIndex === undefined || !answers) {
+            return res.status(400).json({ message: "Missing required parameters: email, moduleId, sectionIndex, answers" });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const module = await Module.findOne({ id: moduleId });
+        if (!module) {
+            return res.status(404).json({ message: "Module not found" });
+        }
+
+        const section = module.sections[sectionIndex];
+        if (!section) {
+            return res.status(404).json({ message: `Section index ${sectionIndex} not found in module ${moduleId}` });
+        }
+
+        const mcqs = section.mcqs || [];
+        const totalQuestions = mcqs.length;
+
+        if (totalQuestions === 0) {
+            // If section doesn't have MCQs yet, allow passing automatically
+            return res.json({
+                passed: true,
+                score: 0,
+                totalQuestions: 0,
+                percentage: 100,
+                canProceed: true,
+                message: "No quiz required for this section."
+            });
+        }
+
+        // Evaluate deterministically
+        let score = 0;
+        const feedback: any[] = [];
+
+        mcqs.forEach((mcq, idx) => {
+            const userAnswer = answers[idx];
+            const isCorrect = userAnswer === mcq.correctAnswer;
+            if (isCorrect) score++;
+
+            feedback.push({
+                questionIndex: idx,
+                correct: isCorrect,
+                explanation: mcq.explanation || ''
+            });
+        });
+
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const passingThreshold = 70; // 70% required to advance to next section
+        const passed = percentage >= passingThreshold;
+
+        // Persist to user.completedSections if passed
+        if (passed) {
+            if (!user.completedSections) user.completedSections = [] as any;
+
+            const existingIndex = user.completedSections.findIndex(
+                (s: any) => s.moduleId === moduleId && s.sectionIndex === sectionIndex
+            );
+
+            if (existingIndex !== -1) {
+                user.completedSections[existingIndex].score = score;
+                user.completedSections[existingIndex].totalQuestions = totalQuestions;
+                user.completedSections[existingIndex].percentage = percentage;
+                user.completedSections[existingIndex].passed = true;
+                user.completedSections[existingIndex].completedAt = new Date();
+            } else {
+                user.completedSections.push({
+                    moduleId,
+                    sectionIndex,
+                    score,
+                    totalQuestions,
+                    percentage,
+                    passed: true,
+                    completedAt: new Date()
+                } as any);
+            }
+
+            await user.save();
+        }
+
+        res.json({
+            passed,
+            score,
+            totalQuestions,
+            percentage,
+            passingThreshold,
+            canProceed: passed,
+            feedback,
+            message: passed
+                ? "Section assessment passed! You may proceed to the next section."
+                : `You scored ${percentage}%. You need at least ${passingThreshold}% to proceed. Please review and try again.`
+        });
+
+    } catch (error: any) {
+        console.error("Error evaluating section assessment:", error);
+        res.status(500).json({ message: "Failed to evaluate section assessment", error: error.message });
+    }
+});
+
+// LEVEL 2: Evaluate Module-Level Comprehensive Assessment
+router.post('/module/evaluate', async (req, res) => {
+    try {
+        const { email, moduleId, answers } = req.body;
+        // answers: { [questionIndex: number]: number }
+
+        if (!email || !moduleId || !answers) {
+            return res.status(400).json({ message: "Missing required parameters: email, moduleId, answers" });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const module = await Module.findOne({ id: moduleId });
+        if (!module) {
+            return res.status(404).json({ message: "Module not found" });
+        }
+
+        // Check if all sections in this module are completed
+        const numSections = module.sections.length;
+        const userPassedSections = user.completedSections?.filter(
+            (s: any) => s.moduleId === moduleId && s.passed
+        ) || [];
+
+        if (numSections > 0 && userPassedSections.length < numSections) {
+            return res.status(403).json({
+                passed: false,
+                message: `Please complete all ${numSections} sections of this module before taking the final module assessment.`
+            });
+        }
+
+        // Use moduleAssessment.mcqs if present, else fallback to module.mcqs
+        const mcqs = (module.moduleAssessment && module.moduleAssessment.mcqs && module.moduleAssessment.mcqs.length > 0)
+            ? module.moduleAssessment.mcqs
+            : (module.mcqs || []);
+
+        const totalQuestions = mcqs.length;
+        if (totalQuestions === 0) {
+            // Auto pass if no assessment exists
+            if (!user.completedModules.includes(moduleId)) {
+                user.completedModules.push(moduleId);
+                await user.save();
+            }
+            return res.json({
+                passed: true,
+                score: 0,
+                totalQuestions: 0,
+                percentage: 100,
+                nextModuleUnlocked: true,
+                user
+            });
+        }
+
+        // Deterministic grading
+        let score = 0;
+        const feedback: any[] = [];
+
+        mcqs.forEach((mcq, idx) => {
+            const userAnswer = answers[idx];
+            const isCorrect = userAnswer === mcq.correctAnswer;
+            if (isCorrect) score++;
+
+            feedback.push({
+                questionIndex: idx,
+                correct: isCorrect,
+                explanation: mcq.explanation || ''
+            });
+        });
+
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const passingThreshold = module.moduleAssessment?.passingScore || 70;
+        const passed = percentage >= passingThreshold;
+
+        if (passed) {
+            // Add to completed modules if not already there
+            if (!user.completedModules.includes(moduleId)) {
+                user.completedModules.push(moduleId);
+            }
+
+            // Record in moduleAssessments
+            if (!user.moduleAssessments) user.moduleAssessments = [] as any;
+            const existingModIdx = user.moduleAssessments.findIndex((m: any) => m.moduleId === moduleId);
+            if (existingModIdx !== -1) {
+                user.moduleAssessments[existingModIdx].score = score;
+                user.moduleAssessments[existingModIdx].totalQuestions = totalQuestions;
+                user.moduleAssessments[existingModIdx].percentage = percentage;
+                user.moduleAssessments[existingModIdx].passed = true;
+                user.moduleAssessments[existingModIdx].completedAt = new Date();
+            } else {
+                user.moduleAssessments.push({
+                    moduleId,
+                    score,
+                    totalQuestions,
+                    percentage,
+                    passed: true,
+                    completedAt: new Date()
+                } as any);
+            }
+
+            // Recalculate course progress
+            const allCourseModules = await Module.find({ courseId: module.courseId });
+            const totalCourseModules = allCourseModules.length || 10;
+            const completedCount = allCourseModules.filter(m => user.completedModules.includes(m.id)).length;
+            user.progress = Math.round((completedCount / totalCourseModules) * 100);
+
+            await user.save();
+        }
+
+        res.json({
+            passed,
+            score,
+            totalQuestions,
+            percentage,
+            passingThreshold,
+            nextModuleUnlocked: passed,
+            feedback,
+            user,
+            message: passed
+                ? "Congratulations! You have passed the module assessment and unlocked the next module!"
+                : `You scored ${percentage}%. You need at least ${passingThreshold}% to pass this module. Please review the material and retake the assessment.`
+        });
+
+    } catch (error: any) {
+        console.error("Error evaluating module assessment:", error);
+        res.status(500).json({ message: "Failed to evaluate module assessment", error: error.message });
+    }
+});
+
 export default router;
+

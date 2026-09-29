@@ -27,6 +27,25 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
+    // LEVEL 1 PROGRESS: Track completed sections per module
+    completedSections: [{
+        moduleId: { type: String, required: true },
+        sectionIndex: { type: Number, required: true },
+        score: { type: Number, default: 0 },
+        totalQuestions: { type: Number, default: 10 },
+        percentage: { type: Number, default: 0 },
+        passed: { type: Boolean, default: false },
+        completedAt: { type: Date, default: Date.now }
+    }],
+    // LEVEL 2 PROGRESS: Track module-level final assessment attempts & scores
+    moduleAssessments: [{
+        moduleId: { type: String, required: true },
+        score: { type: Number, default: 0 },
+        totalQuestions: { type: Number, default: 10 },
+        percentage: { type: Number, default: 0 },
+        passed: { type: Boolean, default: false },
+        completedAt: { type: Date, default: Date.now }
+    }],
     certificateId: { type: String },
     role: { type: String, default: 'user', enum: ['user', 'admin', 'instructor'] },
     referredBy: { type: String },

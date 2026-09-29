@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
-const EMAILJS_SERVICE_ID = 'service_3t3157e';
-const EMAILJS_TEMPLATE_ID = 'template_fsn1w86';
-const EMAILJS_PUBLIC_KEY = 'ZdJ9qxgOMtyatPEh3';
-const EMAILJS_PRIVATE_KEY = 'MCfVpchvqIckvlQMS3bzX';
+const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || 'service_3t3157e';
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'template_fsn1w86';
+const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || 'ZdJ9qxgOMtyatPEh3';
+const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY || 'MCfVpchvqIckvlQMS3bzX';
 
 export const sendEmail = async (toEmail: string, message: string, attachmentData?: string, attachmentName: string = 'certificate.png', templateId?: string, extraParams?: any) => {
 
