@@ -45,6 +45,9 @@ router.get('/', async (req, res) => {
     const email = req.query.email as string;
 
     try {
+        // Enforce only Module 1 for python-ai-course in database
+        await Module.deleteMany({ courseId: 'python-ai-course', id: { $ne: 'module-1' } });
+
         // Fetch modules from DB
         let allModules = await Module.find({}).sort({ order: 1 });
 

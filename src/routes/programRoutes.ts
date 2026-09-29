@@ -42,83 +42,104 @@ router.post('/register', async (req, res) => {
         // 2. DISPATCH EMAILS ASYNCHRONOUSLY VIA RESEND (HTTPS, never blocked by Render)
         (async () => {
             try {
+                const isBiologics = program && (program.toLowerCase().includes('biologic') || program.toLowerCase().includes('drug discovery'));
+
+                const userSubject = isBiologics
+                    ? 'Course Details Unlocked: Next-Gen AI in Drug Discovery & Biologics Masterclass'
+                    : 'Registration Confirmed: Forward Deployed Engineer (FDE) Masterclass';
+
+                const userHtml = isBiologics
+                    ? `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+                            <h2 style="color: #0f269a;">Welcome to GenQuantaa Biologics, ${fullName}!</h2>
+                            <p style="color: #475569; font-size: 15px; line-height: 1.6;">
+                                Thank you for your interest in the <strong>Next-Gen AI in Drug Discovery &amp; Biologics Masterclass</strong>.
+                            </p>
+                            <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                                <h4 style="margin-top: 0; color: #1e293b;">📅 Program Highlights</h4>
+                                <p style="margin: 5px 0;"><strong>Duration:</strong> 12 Weeks (Live Project Driven)</p>
+                                <p style="margin: 5px 0;"><strong>Induction:</strong> 20th August 2026</p>
+                                <p style="margin: 5px 0;"><strong>Deliverables:</strong> 4 Live In-Silico Projects + Paper Publication Support</p>
+                                <p style="margin: 5px 0;"><strong>Hotline:</strong> +91 7036955133</p>
+                            </div>
+                            <p style="color: #475569;">The full course curriculum, code repositories, and project timelines are now unlocked on your portal.</p>
+                            <p style="color: #94a3b8; font-size: 12px; margin-top: 30px;">
+                                GenQuantaa Academy — Empowering researchers with frontier AI &amp; Molecular In-Silico technologies.
+                            </p>
+                        </div>
+                    `
+                    : `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+                            <h2 style="color: #0f269a;">Welcome to GenQuantaa FDE Masterclass, ${fullName}!</h2>
+                            <p style="color: #475569; font-size: 15px; line-height: 1.6;">
+                                Thank you for registering for the <strong>Forward Deployed Engineer (FDE) Masterclass</strong> led by <strong>Ashwin Kumaar</strong>.
+                            </p>
+                            <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                                <h4 style="margin-top: 0; color: #1e293b;">📅 Masterclass Details</h4>
+                                <p style="margin: 5px 0;"><strong>Date:</strong> 30th Sept 2026 (Wed)</p>
+                                <p style="margin: 5px 0;"><strong>Time:</strong> 7:30 PM - 10:00 PM IST</p>
+                                <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumaar (Ex-HCL &amp; Systems Architect)</p>
+                            </div>
+                            <p style="color: #475569;">Here are your instant access resources:</p>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+                                <tr>
+                                    <td style="padding: 6px 0;">
+                                        <a href="https://academy.genquantaa.com/FDE%20Brochure.pdf"
+                                           style="display: block; background: #0f269a; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
+                                            📄 Download FDE Course Brochure (PDF)
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="color: #94a3b8; font-size: 12px; margin-top: 30px;">
+                                GenQuantaa Academy — Transforming SDEs into High-Impact Forward Deployed Engineers.
+                            </p>
+                        </div>
+                    `;
+
+                const adminSubject = isBiologics
+                    ? `🧪 New Biologics & AI in Drug Discovery Lead: ${fullName}`
+                    : `New FDE Masterclass Registration: ${fullName}`;
+
+                const adminHtml = `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+                        <h2 style="color: #0f269a;">${isBiologics ? 'New Biologics &amp; AI in Drug Discovery Lead (Course Unlocked)' : 'New FDE Masterclass Registration'}</h2>
+                        <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #cbd5e1;">
+                            <p style="margin: 6px 0;"><strong>Name:</strong> ${fullName}</p>
+                            <p style="margin: 6px 0;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                            <p style="margin: 6px 0;"><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
+                            <p style="margin: 6px 0;"><strong>Program:</strong> ${program || 'Forward Deployed Engineering'}</p>
+                            <p style="margin: 6px 0;"><strong>Registered At:</strong> ${new Date().toLocaleString()}</p>
+                        </div>
+                        <p style="color: #64748b; font-size: 12px;">This lead was forwarded directly to academy@genquantaa.com from GenQuantaa Academy LMS.</p>
+                    </div>
+                `;
+
                 const [userResult, adminResult] = await Promise.all([
                     // Confirmation email to the registrant
                     resend.emails.send({
                         from: FROM_ADDRESS,
                         to: [email],
-                        subject: 'Registration Confirmed: Forward Deployed Engineer (FDE) Masterclass',
-                        html: `
-                            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
-                                <h2 style="color: #0f269a;">Welcome to GenQuantaa FDE Masterclass, ${fullName}!</h2>
-                                <p style="color: #475569; font-size: 15px; line-height: 1.6;">
-                                    Thank you for registering for the <strong>Forward Deployed Engineer (FDE) Masterclass</strong> led by <strong>Ashwin Kumaar</strong>.
-                                </p>
-                                <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                                    <h4 style="margin-top: 0; color: #1e293b;">📅 Masterclass Details</h4>
-                                    <p style="margin: 5px 0;"><strong>Date:</strong> 30th Sept 2026 (Wed)</p>
-                                    <p style="margin: 5px 0;"><strong>Time:</strong> 7:30 PM - 10:00 PM IST</p>
-                                    <p style="margin: 5px 0;"><strong>Instructor:</strong> Ashwin Kumaar (Ex-HCL &amp; Systems Architect)</p>
-                                </div>
-                                <p style="color: #475569;">Here are your instant access resources:</p>
-                                <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
-                                    <tr>
-                                        <td style="padding: 6px 0;">
-                                            <a href="https://academy.genquantaa.com/FDE%20Brochure.pdf"
-                                               style="display: block; background: #0f269a; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
-                                                📄 Download FDE Course Brochure (PDF)
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 6px 0;">
-                                            <a href="https://academy.genquantaa.com/FDE%20PPT.pdf"
-                                               style="display: block; background: #7c3aed; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
-                                                📊 View FDE Presentation Deck (PPT)
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 6px 0;">
-                                            <a href="https://youtu.be/KehyaPw5Mmg"
-                                               style="display: block; background: #d97706; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center;">
-                                                🎬 Watch Masterclass Recorded Video
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p style="color: #94a3b8; font-size: 12px; margin-top: 30px;">
-                                    GenQuantaa Academy — Transforming SDEs into High-Impact Forward Deployed Engineers.
-                                </p>
-                            </div>
-                        `
+                        subject: userSubject,
+                        html: userHtml
                     }),
 
-                    // Lead notification to admin
+                    // Lead notification explicitly forwarded to academy@genquantaa.com
                     resend.emails.send({
                         from: FROM_ADDRESS,
-                        to: [ADMIN_EMAIL],
-                        subject: `New FDE Masterclass Registration: ${fullName}`,
-                        html: `
-                            <h2>New FDE Masterclass Registration Lead</h2>
-                            <p><strong>Name:</strong> ${fullName}</p>
-                            <p><strong>Email:</strong> ${email}</p>
-                            <p><strong>Phone:</strong> ${phone}</p>
-                            <p><strong>Graduation Year:</strong> ${graduationYear || 'N/A'}</p>
-                            <p><strong>Job Title:</strong> ${jobTitle || 'N/A'}</p>
-                            <p><strong>Program:</strong> ${program || 'Forward Deployed Engineering'}</p>
-                            <p><strong>Registered At:</strong> ${new Date().toLocaleString()}</p>
-                        `
+                        to: ['academy@genquantaa.com'],
+                        subject: adminSubject,
+                        html: adminHtml
                     })
                 ]);
 
                 if (userResult.error || adminResult.error) {
                     console.warn('Resend partial error — user:', userResult.error, '| admin:', adminResult.error);
                 } else {
-                    console.log(`Resend emails sent successfully — user: ${email}, admin: ${ADMIN_EMAIL}`);
+                    console.log(`Resend emails forwarded successfully to academy@genquantaa.com for ${fullName}`);
                 }
             } catch (emailErr) {
-                console.error('Resend email dispatch error:', emailErr);
+                console.error('Email forwarding error:', emailErr);
             }
         })();
 
