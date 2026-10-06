@@ -5,6 +5,7 @@ import { domainSpecificModules } from './courses/domain_specific';
 import { cqvModules } from './courses/cqv';
 import { curaquantisModules } from './courses/curaquantis';
 import { noCodeAiAgentModules } from './courses/no_code_ai_agents';
+import { robotics30DayModules } from './courses/robotics_30_day';
 
 // NOTE: This file is used for INITIAL SEEDING of the MongoDB database.
 // Once the application runs and seeds the database, the 'live' data is served from MongoDB.
@@ -18,7 +19,8 @@ export const modulesData = [
     ...aiCoreModules,
     ...domainSpecificModules,
     ...cqvModules,
-    ...curaquantisModules
+    ...curaquantisModules,
+    ...robotics30DayModules
 ];
 
 export const modulesDataHindi: any[] = [

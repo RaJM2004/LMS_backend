@@ -5,7 +5,8 @@
     "scripts": {
         "start": "node dist/src/index.js",
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-        "build": "tsc"
+        "build": "tsc",
+        "seed:robotics": "node populate_robotics_module1.js"
     },
     "dependencies": {
         "@types/uuid": "^11.0.0",

@@ -1,0 +1,698 @@
+{
+  "id": "robot-ai-module-1",
+  "courseId": "robot-ai",
+  "order": 1,
+  "title": "MODULE 1 — Robotics & Engineering Fundamentals",
+  "sections": [
+    {
+      "id": "robot-ai-mod1-sec1",
+      "title": "Lesson 1 — What is Robotics?",
+      "videoUrl": "https://www.youtube.com/watch?v=cfkGcJQT4nM",
+      "content": "## ROBO FOR SCHOOLS 🚀\n### MODULE 1 — ROBOTICS & ENGINEERING FUNDAMENTALS\n*Student Learning Content • Classes IX–X*  \n**Recommended duration:** 4 lessons × 45 minutes | **Learning mode:** Read → Watch → Explore → Practice → Test → Reflect\n\n---\n\n### Module 1 Introduction\nWelcome to your first step into the world of robotics! 🤖\n\nRobots are no longer limited to science-fiction movies. Today, robots are used in factories, hospitals, warehouses, farms, laboratories, schools, homes, and space missions.\n\nBut what exactly is a robot? How does a robot know what is happening around it? How does it decide what to do? How does it move? And most importantly—**how can YOU design one?**\n\nIn this module, you will begin answering these questions. You will learn how robots are built, how they sense the world, how they make decisions, and how they perform actions.\n\n> **Engineer's Golden Rule:**  \n> A good robot is not created in one attempt. It is designed, tested, improved, and tested again.\n\n---\n\n### Module Learning Objectives\n- **Explain** what robotics means and what a robot is.\n- **Understand** the difference between a machine, an automated system, and a robot.\n- **Identify** common types of robots and real-world applications of robotics.\n- **Explain** the major parts of a robot (sensors, controllers, actuators, power).\n- **Understand** the basic robot control cycle: **Input → Process → Output**.\n- **Apply** the engineering design process to solve a real-world problem.\n- **Create** a basic concept for a school-assistance robot.\n\n---\n\n### Lesson 1 — What is Robotics?\n**Lesson Goal:** Build your foundational vocabulary and develop a simple system-level understanding of robotics.\n\n#### 1. What is Robotics?\nRobotics is the field of technology and engineering concerned with **designing, building, programming, and operating robots**.\n\nRobotics is an **interdisciplinary field** combining:\n- **Mechanical engineering** (structure, gears, chassis, mechanisms)\n- **Electronics & Electrical systems** (circuits, power, voltage, motor drivers)\n- **Computer programming** (logic, algorithms, control code)\n- **Sensors & Control systems** (feedback loops, inputs, navigation)\n- **Artificial Intelligence** (decision making, perception, computer vision)\n\nA robotics engineer doesn't just write software—they design how the robot moves, how it senses its environment, how it handles power safely, and how it interacts with humans.\n\n#### 2. What is a Robot?\nA robot is a **programmable machine or system** designed to perform a task or set of tasks. A robot can:\n- Sense its surroundings\n- Process information and make decisions according to programmed rules\n- Perform physical actions or manipulate objects\n- Assist humans and perform repetitive tasks\n\n#### 3. Robot vs Ordinary Machine\nNot every machine is a robot!\n- **Bicycle:** A mechanical machine, but it cannot sense the environment, make decisions, or perform programmed tasks autonomously.\n- **Autonomous Delivery Robot:** Senses obstacles using distance sensors/cameras, processes this data in a controller, makes decisions, and commands motors to steer around obstacles.\n\nThe defining characteristic of a robot is the synthesis of **sensing, computation/control, and physical action**.\n\n#### 4. The Basic Robot System (Input → Process → Output)\nEvery robotic system operates on three foundational stages:\n1. **INPUT (Sensors):** Gathers data (distance, light, button press, camera feed).\n2. **PROCESS (Controller):** Microcontroller/computer processes inputs and determines what to do based on logic.\n3. **OUTPUT (Actuators):** Performs actions (turning motors, lighting LEDs, sounding buzzers).\n\n$$\\text{Sensor (Input)} \\longrightarrow \\text{Controller (Process)} \\longrightarrow \\text{Actuator (Output)}$$\n\n*Example:* A classroom rover approaches a chair. An ultrasonic sensor detects the obstacle ($< 20\\text{ cm}$). The Arduino processes this input and triggers the motor driver to reverse and turn.\n\n#### 5. Where Are Robots Used?\n| Industry | Real-World Application |\n| :--- | :--- |\n| **Manufacturing** | Assembly lines, precision welding, spray painting, palletizing |\n| **Healthcare** | Surgical assistance, rehabilitation exoskeletons, hospital disinfectant rovers |\n| **Agriculture** | Autonomous tractors, crop monitoring, precision harvesting |\n| **Logistics** | Warehouse autonomous mobile robots (AMRs), sorting and delivery |\n| **Space Exploration** | Mars rovers (Curiosity, Perseverance), robotic arms on the ISS |\n| **Education** | STEM learning, coding, hands-on engineering challenges |\n\n---\n\n### Hands-on Activity: Robot Spotting Challenge\nLook around your home, school, or community (or research online) and identify **five robotic or automated systems**.\n1. Note the system name (e.g., Robotic Vacuum Cleaner).\n2. What does it do? (Cleans floors autonomously).\n3. What does it sense? (Bumpers, lidar/infrared distance sensors, cliff sensors).\n4. How does it act? (Drives twin motors, rotates brushes, runs suction).\n5. Explain in 3–5 sentences why using a robot is beneficial for that task!",
+      "mcqs": [
+        {
+          "question": "What is robotics?",
+          "options": [
+            "Only the study of mechanical engines",
+            "The field involving the design, construction, programming, and operation of robots",
+            "Exclusively computer software and website development",
+            "Only manual assembly of electronic resistors"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Robotics is an interdisciplinary field covering design, construction, programming, and operation of robots."
+        },
+        {
+          "question": "Which sequence best represents the fundamental operation of a robotic system?",
+          "options": [
+            "Input → Process → Output",
+            "Output → Input → Battery",
+            "Motor → Wheel → Screw",
+            "Chassis → Wheel → Battery"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A robot takes in environmental information (Input), calculates decisions (Process), and produces physical action (Output)."
+        },
+        {
+          "question": "Which component provides information about the robot's environment?",
+          "options": [
+            "Sensor",
+            "Chassis",
+            "Gearbox",
+            "Wheel"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Sensors are the input devices that collect data such as distance, light, or temperature from the surroundings."
+        },
+        {
+          "question": "Which component can create physical movement in a robot?",
+          "options": [
+            "Actuator (such as a motor)",
+            "Resistor",
+            "Sensor",
+            "Breadboard"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Actuators (like DC motors, servos, and steppers) convert electrical energy into physical motion."
+        },
+        {
+          "question": "Why are robots useful across different industries?",
+          "options": [
+            "They perform tasks accurately, operate in hazardous environments, and execute programmable actions",
+            "They never require electricity or maintenance",
+            "They can only operate inside car manufacturing plants",
+            "They completely eliminate the need for human software engineers"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Robots are versatile tools that handle repetitive, precise, or hazardous tasks under programmable control."
+        },
+        {
+          "question": "Why is robotics described as an 'interdisciplinary' field?",
+          "options": [
+            "Because it only uses a single programming language",
+            "Because it combines mechanical, electrical, computer science, and control systems engineering",
+            "Because it is only taught in university graduate programs",
+            "Because it avoids using electronics"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Robotics unites multiple disciplines: mechanics for structure, electronics for power, and computer science for intelligence."
+        },
+        {
+          "question": "What distinguishes an autonomous robot from an ordinary bicycle?",
+          "options": [
+            "A bicycle has wheels whereas robots never use wheels",
+            "A bicycle is made of metal while robots are only made of plastic",
+            "An autonomous robot senses its surroundings, processes data, and acts independently",
+            "There is no difference between them"
+          ],
+          "correctAnswer": 2,
+          "explanation": "An autonomous robot can sense, compute, and act based on programmed instructions without constant direct human steering."
+        },
+        {
+          "question": "In the Input → Process → Output model, what role does a microcontroller like Arduino play?",
+          "options": [
+            "Input stage only",
+            "Process stage (the brain)",
+            "Output stage only",
+            "Mechanical structural frame"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The microcontroller acts as the processing brain, reading inputs, evaluating logic, and commanding outputs."
+        },
+        {
+          "question": "Which of the following is an example of an Input device on a robot?",
+          "options": [
+            "Ultrasonic distance sensor",
+            "DC motor",
+            "Buzzer",
+            "Drive wheel"
+          ],
+          "correctAnswer": 0,
+          "explanation": "An ultrasonic distance sensor gathers data about obstacles in front of the robot and sends it as an input signal."
+        },
+        {
+          "question": "In warehouse logistics, what do modern Autonomous Mobile Robots (AMRs) do?",
+          "options": [
+            "Assemble bicycles manually",
+            "Transport goods and navigate autonomously between storage aisles",
+            "Replace all electrical wiring in the building",
+            "Only operate when connected to a physical wall cord"
+          ],
+          "correctAnswer": 1,
+          "explanation": "AMRs transport packages and pallets autonomously, adapting their paths to obstacles in dynamic warehouse floors."
+        }
+      ]
+    },
+    {
+      "id": "robot-ai-mod1-sec2",
+      "title": "Lesson 2 — Robot Types & Applications",
+      "videoUrl": "https://www.youtube.com/watch?v=cfkGcJQT4nM",
+      "content": "## LESSON 2 — ROBOT TYPES & APPLICATIONS\n**Lesson Goal:** Learn how robots are classified according to their purpose, mobility, and working environments.\n\n---\n\n### 1. Classification of Robots\nThere is no single robot design for all tasks. Engineers design robots specifically suited for their target domain and operating environment:\n\n| Robot Type | Description & Examples | Key Benefits |\n| :--- | :--- | :--- |\n| **Industrial Robots** | Articulated arms in manufacturing; spot welding, automated packaging, painting. | Extreme precision, payload capacity, high repeatability, speed. |\n| **Mobile Robots** | Robots using wheels, continuous tracks, or legs to traverse terrain. | Remote exploration, material transport, delivery. |\n| **Autonomous Mobile Robots (AMRs)** | Smart rovers that dynamically map surroundings (SLAM) and navigate without tracks. | Dynamic warehouse routing, obstacle evasion, flexible logistics. |\n| **Humanoid Robots** | Robots designed with human-like anatomy (torso, arms, bipedal legs, head). | Human-robot interaction, operating in human-designed spaces and stairs. |\n| **Collaborative Robots (Cobots)** | Safe robots designed to work directly alongside human workers without safety cages. | Force-limited joints, safe contact detection, flexible reconfiguration. |\n| **Agricultural Robots** | Automated harvesters, drone crop-sprayers, and field soil monitors. | High-throughput planting, precision fertilizer dosing, reduced labor strain. |\n| **Healthcare Robots** | Surgical assistants (e.g. da Vinci system), therapy units, hospital drug runners. | Sub-millimeter surgical accuracy, infection prevention, patient rehabilitation. |\n| **Educational Robots** | Modular kits (Arduino, LEGO, ESP32 rovers) built for STEM classrooms. | Hands-on learning of electronics, kinematics, algorithms, and debugging. |\n| **Inspection Robots** | Pipe crawlers, drone quadcopters, underwater ROVs exploring bridges & turbines. | Inspecting hazardous, confined, or unreachable infrastructure. |\n| **Service & Delivery Robots** | Restaurant waiter bots, hotel service delivery units, street sidewalk couriers. | Customer convenience, contactless delivery, automated cleaning. |\n\n---\n\n### 2. Robot Selection Framework\n> **Rule of Thumb:** *\"Think about the task first. Then choose the robot.\"*\n\nWhen choosing or designing a robot, ask:\n1. **What is the environment?** (Smooth classroom tile, rough muddy field, underwater, tight pipeline).\n2. **What mobility is required?** (Stationary arm on a workbench, 2-wheel differential drive, multi-legged walker, aerial drone).\n3. **What payload must it handle?** (A few grams for a sensor vs 50 kg of warehouse boxes).\n4. **Is human collaboration required?** (Needs soft touch, vision safety, or isolation cages).\n\n---\n\n### 3. Practical Activity: Application Matching\nMatch each real-world challenge with the optimal robotic system:\n- **Challenge A:** A car manufacturing plant needs to weld 500 car chassis panels per day with millimeter accuracy.  \n  *Solution:* **Industrial Robotic Arm**\n- **Challenge B:** An e-commerce fulfillment center needs to move bin shelves to human packers without floor tracks.  \n  *Solution:* **Autonomous Mobile Robot (AMR)**\n- **Challenge C:** Grade 9 students need to learn sensor integration and C++ code loops.  \n  *Solution:* **Educational Robotics Kit**\n- **Challenge D:** A large farm needs to detect weed clusters and spray only affected areas.  \n  *Solution:* **Agricultural Drone / Ground Rover**\n- **Challenge E:** University researchers want to explore natural body language and facial gestures in caregiving.  \n  *Solution:* **Humanoid Robot**",
+      "mcqs": [
+        {
+          "question": "Which type of robot is most commonly used for high-precision welding on automotive assembly lines?",
+          "options": [
+            "Industrial robot arm",
+            "Toy robot",
+            "Agricultural drone",
+            "Educational kit"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Industrial articulated robot arms provide the speed, precision, and repeatability required for automotive welding."
+        },
+        {
+          "question": "What does the acronym AMR stand for in robotics and logistics?",
+          "options": [
+            "Autonomous Mobile Robot",
+            "Automated Machine Receiver",
+            "Automatic Motor Router",
+            "Advanced Mechanical Rotor"
+          ],
+          "correctAnswer": 0,
+          "explanation": "AMR stands for Autonomous Mobile Robot, capable of self-navigation in unconstrained environments."
+        },
+        {
+          "question": "What is a 'Cobot' (Collaborative Robot)?",
+          "options": [
+            "A robot designed to operate safely in close proximity to human workers",
+            "A robot that can only be controlled by two operators simultaneously",
+            "A robot that operates exclusively under deep ocean trenches",
+            "A robot that cannot be programmed"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Cobots are built with integrated force sensors and speed limits so humans and robots can collaborate safely."
+        },
+        {
+          "question": "Which robot type would be best suited for inspecting deep sewer pipes or underwater oil platforms?",
+          "options": [
+            "Specialized inspection robot / ROV",
+            "Humanoid bipedal robot",
+            "Restaurant delivery bot",
+            "Educational tabletop chassis"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Inspection robots and underwater ROVs are ruggedized to enter hazardous, confined, or unreachable environments."
+        },
+        {
+          "question": "Which robot type is primarily designed for agricultural applications like fruit picking and soil analysis?",
+          "options": [
+            "Agricultural robot",
+            "Automotive paint bot",
+            "Humanoid receptionist",
+            "Industrial conveyor"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Agricultural robots are tailored with specialized vision and grippers for fieldwork, harvesting, and crop monitoring."
+        },
+        {
+          "question": "What is the primary objective of an Educational Robot?",
+          "options": [
+            "To teach programming, electronics, mechanics, and systems thinking to learners",
+            "To weld steel beams in commercial factories",
+            "To replace classroom teachers entirely",
+            "To operate at high voltages exceeding 10,000 watts"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Educational robots offer accessible platforms for students to build, wire, program, and understand engineering concepts."
+        },
+        {
+          "question": "How do Autonomous Mobile Robots (AMRs) differ from traditional Automated Guided Vehicles (AGVs)?",
+          "options": [
+            "AMRs dynamically navigate around obstacles using real-time sensors, whereas AGVs strictly follow fixed floor tracks or wires",
+            "AGVs are much smarter than AMRs",
+            "AMRs cannot move",
+            "There is no difference in mobility"
+          ],
+          "correctAnswer": 0,
+          "explanation": "AMRs use LiDAR/cameras to map facilities and dynamically steer around obstacles, unlike track-bound AGVs."
+        },
+        {
+          "question": "Which of the following is a primary characteristic of a Humanoid Robot?",
+          "options": [
+            "An anatomical structure mimicking the human body (arms, torso, bipedal structure)",
+            "It must always be mounted to a heavy ceiling beam",
+            "It has no electronic components",
+            "It only moves along fixed linear rails"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Humanoids are structured to resemble human anatomy to navigate spaces and tools created for human beings."
+        },
+        {
+          "question": "In hospital environments, how do healthcare robots assist medical staff?",
+          "options": [
+            "Assisting in minimally invasive surgeries, patient rehabilitation, and contactless medicine delivery",
+            "Manufacturing heavy truck engines",
+            "Plowing outdoor fields",
+            "Replacing doctors for legal certifications"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Healthcare robots provide tremor-free surgical assistance, logistics delivery, and rehabilitation support."
+        },
+        {
+          "question": "When applying the Robot Selection Framework, what should you identify FIRST?",
+          "options": [
+            "The task, requirements, and environment of the problem",
+            "The paint color of the robot chassis",
+            "The most expensive battery brand on the market",
+            "A random software library before understanding the hardware"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Engineers always begin by analyzing the problem, task constraints, and operating environment before selecting hardware."
+        }
+      ]
+    },
+    {
+      "id": "robot-ai-mod1-sec3",
+      "title": "Lesson 3 — Anatomy of a Robot",
+      "videoUrl": "https://www.youtube.com/watch?v=KpWrHVo972g",
+      "content": "## LESSON 3 — ANATOMY OF A ROBOT\n**Lesson Goal:** Understand the major hardware subsystems of a robot, how they interface, and how the continuous control cycle functions.\n\n---\n\n### 1. The Core Subsystems of a Robot\nJust as the human body relies on interconnected skeletal, muscular, nervous, and circulatory systems, a robot relies on coordinated engineering subsystems:\n\n```\n+-------------------------------------------------------------+\n|                      POWER SYSTEM                           |\n|        (Li-Ion / NiMH Battery, Voltage Regulators)          |\n+------------------------------+------------------------------+\n                               |\n                               v\n+------------------+   +-------------------+   +--------------+\n|     SENSORS      |-->|    CONTROLLER     |-->| MOTOR DRIVER |\n| (Ultrasonic, IR) |   | (Arduino / ESP32) |   | (L298N / H-B)|\n+------------------+   +-------------------+   +-------+------+\n                                                       |\n                                                       v\n+------------------------------------------------+ +-----------+\n|               MECHANICAL SYSTEM                | | ACTUATORS |\n|  (Chassis, 2WD Wheels, Castor, Gears, Shafts)  | |(DC Motors)|\n+------------------------------------------------+ +-----------+\n```\n\n#### Detailed Breakdown:\n1. **Mechanical System:** The physical skeleton. Chassis frame, acrylic/aluminum plates, drive wheels, ball castor, motor brackets, screws, and fasteners.\n2. **Power System:** The circulatory system. Rechargeable battery packs, power distribution boards, step-down buck converters (e.g. 7.4V → 5V regulated).\n3. **Sensors (The Senses):**\n   - *Ultrasonic Sensor (HC-SR04):* Measures distance using high-frequency acoustic echo waves.\n   - *Infrared (IR) Sensors:* Detects proximity or surface reflectivity (white vs black line tracking).\n   - *LDR (Light Dependent Resistor):* Detects ambient brightness.\n   - *IMU (Inertial Measurement Unit):* Measures tilt, acceleration, and angular rotation.\n4. **Controller (The Brain):**\n   - Microcontrollers like **Arduino Uno (ATmega328P)** or **ESP32**. Executes the embedded software loop, reads pins, and calculates commands.\n5. **Motor Driver (The Muscle Interface):**\n   - *Why do we need one?* A microcontroller GPIO pin only outputs ~20–40 mA at 5V, while a DC motor needs 500–1500 mA. A motor driver (e.g. **L298N dual H-Bridge**) safely uses a dedicated high-current supply while accepting low-voltage logic signals from the controller.\n6. **Actuators (The Muscles):**\n   - *DC Geared Motors:* Continuous high-speed rotation for wheels.\n   - *Servo Motors:* Precise angular positioning (e.g. 0° to 180°) for robotic steering or gripper arms.\n   - *Stepper Motors:* Incremental step-by-step angle control for 3D printers and CNC machines.\n7. **Software & Firmware:** The control program (C/C++ or MicroPython) managing conditionals, state machines, and hardware timers.\n\n---\n\n### 2. The Continuous Robot Control Cycle\nAll autonomous robots operate on a continuous loop:\n$$\\text{SENSE} \\longrightarrow \\text{PROCESS} \\longrightarrow \\text{DECIDE} \\longrightarrow \\text{ACT} \\longrightarrow \\text{SENSE AGAIN}$$\n\n#### Obstacle Avoidance Walkthrough:\n1. **Sense:** HC-SR04 triggers a 10 μs pulse and measures echo return time. Computed distance = 14 cm.\n2. **Process:** Microcontroller compares: `distance (14) < obstacleThreshold (20)`.\n3. **Decide:** Condition is TRUE → Collision imminent! Transition from `STATE_FORWARD` to `STATE_AVOID`.\n4. **Act:** Controller sends signals to motor driver: Left motor reverse, Right motor forward (spin left).\n5. **Sense Again:** Robot rotates for 400 ms, measures distance again, and checks if the forward path is clear.\n\n---\n\n### 3. Practical Exercise: Robot Anatomy Mapping\n**Objective:** Sketch or diagram the complete block diagram of a 2WD Obstacle Avoidance Rover.\nInclude:\n- 1 Power source (Battery pack + power switch)\n- 1 Microcontroller board (Arduino Uno)\n- 2 Sensors (HC-SR04 Ultrasonic distance sensor + IR sensor)\n- 1 Motor driver module (L298N)\n- 2 Actuators (Geared DC Motors attached to wheels)\n- Signal wires (GPIO, Trigger/Echo, PWM speed control)",
+      "mcqs": [
+        {
+          "question": "Which component acts as the 'brain' that executes program code in an educational robot?",
+          "options": [
+            "Microcontroller (e.g., Arduino or ESP32)",
+            "Drive wheel",
+            "Castor bearing",
+            "Chassis plate"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The microcontroller processes sensor signals, runs the program logic, and commands the actuators."
+        },
+        {
+          "question": "Why can't DC motors be connected directly to microcontroller GPIO pins?",
+          "options": [
+            "Microcontroller pins cannot supply enough electrical current (milliamps) to power motors safely",
+            "Microcontroller pins only output mechanical power",
+            "DC motors require alternating AC wall current only",
+            "Microcontrollers can only connect to LEDs"
+          ],
+          "correctAnswer": 0,
+          "explanation": "GPIO pins provide ~20-40 mA, while motors need hundreds of milliamps; motor drivers bridge this power gap safely."
+        },
+        {
+          "question": "What is the primary function of a motor driver like the L298N?",
+          "options": [
+            "To interface the low-current controller with high-current motors and control direction/speed",
+            "To sense ambient temperature",
+            "To recharge the main battery from sunlight",
+            "To act as the robot's mechanical chassis"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Motor drivers use H-bridge circuits to switch direction and regulate current supplied to motors from an external battery."
+        },
+        {
+          "question": "Which sensor is most commonly used on small mobile robots for measuring obstacle distance via sound waves?",
+          "options": [
+            "Ultrasonic Sensor (HC-SR04)",
+            "LDR (Light Dependent Resistor)",
+            "Piezoelectric buzzer",
+            "Thermocouple"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Ultrasonic sensors emit 40 kHz sound waves and measure the echo time to calculate distance accurately."
+        },
+        {
+          "question": "What type of actuator is best suited for setting an exact angular position between 0° and 180°?",
+          "options": [
+            "Servo motor",
+            "Standard DC motor",
+            "Solenoid buzzer",
+            "Linear resistor"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Servo motors have built-in feedback potentiometers to rotate to and hold precise angular positions."
+        },
+        {
+          "question": "What is the correct sequence of the autonomous robot control cycle?",
+          "options": [
+            "Sense → Process → Decide → Act → Sense Again",
+            "Act → Sleep → Power Off",
+            "Process → Act → Forget → Disassemble",
+            "Battery → Wheel → Frame → Code"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Autonomous robots continuously sense the surroundings, process inputs, decide next states, act, and re-sample."
+        },
+        {
+          "question": "What role does the 'Mechanical System' play in robot anatomy?",
+          "options": [
+            "It provides physical structure, chassis mounting, shafts, and wheels for locomotion",
+            "It stores the compiled C++ firmware in silicon",
+            "It converts 220V AC into 5V DC",
+            "It detects infrared line reflections"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The mechanical system is the physical chassis and drivetrain that supports and moves the robot."
+        },
+        {
+          "question": "Which of the following is considered an Actuator?",
+          "options": [
+            "Geared DC Motor",
+            "Infrared photodiode",
+            "Microcontroller clock crystal",
+            "Ultrasonic receiver transducer"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Actuators create mechanical motion from electrical energy. Geared DC motors are prime examples."
+        },
+        {
+          "question": "What is the purpose of voltage regulation in a robot's power subsystem?",
+          "options": [
+            "To convert varying battery voltages into stable, clean voltages required by delicate microchips (e.g. steady 5V)",
+            "To make the robot drive faster when battery is low",
+            "To eliminate the need for batteries entirely",
+            "To change digital code into analog sound"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Voltage regulators protect microcontrollers and sensors by stepping down and stabilizing fluctuating battery voltage."
+        },
+        {
+          "question": "Which sensor would you select to enable a robot to track a black electrical tape line on a white floor?",
+          "options": [
+            "Infrared (IR) reflective sensor",
+            "Barometric air pressure sensor",
+            "Microphone sound sensor",
+            "GPS receiver"
+          ],
+          "correctAnswer": 0,
+          "explanation": "IR sensors measure light reflection; black absorbs IR light while white reflects it, making line following possible."
+        }
+      ]
+    },
+    {
+      "id": "robot-ai-mod1-sec4",
+      "title": "Lesson 4 — Engineering Design Process",
+      "videoUrl": "https://www.youtube.com/watch?v=KpWrHVo972g",
+      "content": "## LESSON 4 — ENGINEERING DESIGN PROCESS\n**Lesson Goal:** Learn how professional engineers transform an open-ended problem into a working robotic solution through iterative design, testing, and continuous improvement.\n\n---\n\n### 1. The Engineering Mindset\nImagine your school faces an everyday logistical challenge:  \n*Teachers and librarians need to safely transport heavy stacks of books and science lab apparatus between classrooms across 3 floors.*\n\nCould a robot solve this?  \nBefore rushing to solder wires or write code, professional engineers ask critical questions:\n- What exactly is the core problem?\n- Who are the end users (students, teachers, custodians)?\n- What is the operating environment (doorway widths, carpet, stairs, ramps)?\n- What constraints exist (budget, battery lifespan, weight, safety near children)?\n- What criteria will prove the solution was successful?\n\n---\n\n### 2. The Robo Engineering Cycle\nOur course follows the structured **7-Stage Robo Engineering Cycle**:\n\n$$\\text{SEE} \\rightarrow \\text{UNDERSTAND} \\rightarrow \\text{BUILD} \\rightarrow \\text{PROGRAM} \\rightarrow \\text{TEST} \\rightarrow \\text{IMPROVE} \\rightarrow \\text{INNOVATE}$$\n\n| Stage | Engineering Action |\n| :--- | :--- |\n| **1. SEE** | Observe the environment, users, physical barriers, and existing manual workarounds. Do not build yet! |\n| **2. UNDERSTAND** | Define explicit technical requirements and constraints (size, speed, payload capacity, budget). |\n| **3. BUILD** | Create sketches, cardboard prototypes, CAD drawings, and physical chassis assemblies. |\n| **4. PROGRAM** | Write embedded firmware: state machines, sensor thresholds, motor PWM control, and safety stops. |\n| **5. TEST** | Run real-world experiments under varied conditions (low battery, bright sunlight, sudden obstacles). |\n| **6. IMPROVE** | Analyze failure data, tune control parameters, reinforce weak joints, and re-test. |\n| **7. INNOVATE** | Elevate the design: add wireless telemetry, enhance power efficiency, or enable multi-robot sync. |\n\n---\n\n### 3. Requirements vs Constraints\n- **Requirements (What the robot MUST achieve):**\n  - Must carry at least 5 kg of textbooks.\n  - Must navigate corridors without bumping into walls or students.\n  - Must operate for 45 minutes on a single charge.\n- **Constraints (Limitations the design MUST respect):**\n  - Chassis width must not exceed 45 cm to pass through crowded classroom aisles.\n  - Total component cost must remain under ₹5,000.\n  - Must use non-hazardous rechargeable battery chemistry (LiFePO4 or NiMH).\n  - Must have an emergency physical kill-switch.\n\n---\n\n### 4. Capstone Exercise: Mini Engineering Challenge\n**Mission:** Design a Robot for Your School.\nFollow the 7-step engineering blueprint:\n1. **Define the Problem:** Write a clear one-sentence problem statement.\n2. **Identify the User:** Who operates or benefits from the robot?\n3. **Define Requirements:** List at least 3 measurable performance requirements.\n4. **Define Constraints:** List at least 2 real-world physical or budgetary constraints.\n5. **Design the Architecture:** Draw the robot and label its sensor, controller, motor driver, battery, chassis, and wheels.\n6. **Describe the Control Cycle:** Fill in:\n   - *My robot senses:* ________.\n   - *My robot processes:* ________.\n   - *My robot decides:* ________.\n   - *My robot acts:* ________.\n7. **Failure Analysis & Improvement:** Identify one realistic failure mode and explain how you would engineer a fix!\n\n---\n\n### Module 1 Summary & Next Steps\nCongratulations on finishing the foundational module of the 30-Day Robotics Lab! 🎓  \nYou now master:\n- Robotics concepts & terminology\n- Robot classification & industrial use cases\n- Anatomy of robots: mechanical, electrical, sensors, controllers, and actuators\n- The 7-step Engineering Design Process\n\nIn **Module 2: Mechanical Systems**, you will dive into physical hardware: force, torque, gear ratios, mechanical advantage, wheel traction, and chassis building!",
+      "mcqs": [
+        {
+          "question": "What should an engineer do FIRST when approaching a new robotics problem?",
+          "options": [
+            "Understand the problem, users, and operating constraints",
+            "Immediately buy the most expensive motors available",
+            "Start writing complex code before knowing the hardware",
+            "Begin assembling random mechanical parts"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Engineers always begin by observing, understanding requirements, and identifying constraints before building."
+        },
+        {
+          "question": "In engineering design, what is a 'constraint'?",
+          "options": [
+            "A limitation or boundary condition that the design must strictly satisfy (e.g. budget, size, battery life)",
+            "A brand of microcontroller board",
+            "A type of high-speed wheel",
+            "An optional cosmetic decal on the chassis"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Constraints are strict design limits, such as maximum physical dimensions, power budgets, or manufacturing costs."
+        },
+        {
+          "question": "Why is rigorous testing essential in robotics engineering?",
+          "options": [
+            "It reveals unexpected failure modes and validates whether requirements are met under real-world conditions",
+            "It replaces the need to write firmware",
+            "It guarantees that parts will never wear out",
+            "It proves that no further improvements can be made"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Testing validates performance and provides empirical evidence for tuning and refining the robot's design."
+        },
+        {
+          "question": "What should an engineer do when a prototype fails during testing?",
+          "options": [
+            "Analyze why it failed, learn from the data, and iterate the design to improve it",
+            "Discard the entire project immediately",
+            "Pretend the failure did not occur",
+            "Blame the testing equipment without investigation"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Failure is valuable feedback in engineering. Analyzing root causes drives successful iterative improvements."
+        },
+        {
+          "question": "Which sequence correctly represents the 7-stage Robo Engineering Cycle?",
+          "options": [
+            "See → Understand → Build → Program → Test → Improve → Innovate",
+            "Build → Break → Give Up → Buy New",
+            "Program → Buy → Celebrate → Stop",
+            "Test → Assume → Forget → Deploy"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The complete cycle: See, Understand, Build, Program, Test, Improve, and Innovate."
+        },
+        {
+          "question": "Which of the following is an example of an engineering 'Requirement' for a school delivery robot?",
+          "options": [
+            "The robot must carry at least 5 kg of textbooks across smooth classroom floors",
+            "The maximum budget is ₹3,000",
+            "The classroom doorway is 75 cm wide",
+            "The ambient room temperature is 24°C"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Carrying 5 kg is a functional requirement, whereas budget and doorway width are environmental constraints."
+        },
+        {
+          "question": "What is the purpose of rapid prototyping with cardboard or 3D prints before manufacturing metal parts?",
+          "options": [
+            "To validate geometry, spatial clearances, and fit quickly and inexpensively",
+            "To make the final robot heavier",
+            "Because metal parts cannot be used on robots",
+            "To eliminate the need for batteries"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Rapid prototyping allows engineers to test fit, balance, and kinematics before investing in final manufacturing."
+        },
+        {
+          "question": "In the 'INNOVATE' stage of the engineering cycle, what is the engineer seeking to accomplish?",
+          "options": [
+            "Finding novel, smarter, faster, or more efficient ways to enhance an already functioning solution",
+            "Copying an existing commercial product without any changes",
+            "Removing all sensors to save money",
+            "Deleting the safety software routines"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Innovation elevates working designs through advanced capabilities, efficiency optimizations, or novel features."
+        },
+        {
+          "question": "Why should an engineer document possible failure modes during the design phase?",
+          "options": [
+            "To proactively design safety fallbacks, error handling, and preventative measures",
+            "To discourage people from using the robot",
+            "To increase the cost of the project arbitrarily",
+            "To avoid having to test the physical robot"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Proactive failure analysis allows engineers to implement emergency stops, software watchdog timers, and mechanical guards."
+        },
+        {
+          "question": "What is the key takeaway of the iterative engineering process?",
+          "options": [
+            "Great engineering solutions are rarely created in one attempt; they evolve through cycles of testing and refinement",
+            "The first prototype is always the best possible version",
+            "Testing is only done once at the very beginning",
+            "Design drawings are unnecessary if you have a soldering iron"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Iterative engineering embraces continuous cycles of testing, learning, and refinement to build robust machines."
+        }
+      ]
+    }
+  ],
+  "code": "// ================================================================\n// 30-Day Robotics Lab - Module 1: Sense -> Process -> Decide -> Act\n// Project: Autonomous 2WD Obstacle Avoidance Rover (Arduino Uno)\n// ================================================================\n\nconst int TRIG_PIN = 9;       // Ultrasonic Trigger Pin\nconst int ECHO_PIN = 10;      // Ultrasonic Echo Pin\nconst int ENA = 5;            // Motor Left Speed (PWM)\nconst int IN1 = 6;            // Motor Left Direction 1\nconst int IN2 = 7;            // Motor Left Direction 2\nconst int IN3 = 8;            // Motor Right Direction 1\nconst int IN4 = 11;           // Motor Right Direction 2\nconst int ENB = 3;            // Motor Right Speed (PWM)\n\nconst int DISTANCE_THRESHOLD = 20; // Collision threshold in cm\n\nvoid setup() {\n  Serial.begin(9600);\n  pinMode(TRIG_PIN, OUTPUT);\n  pinMode(ECHO_PIN, INPUT);\n\n  pinMode(ENA, OUTPUT);\n  pinMode(IN1, OUTPUT);\n  pinMode(IN2, OUTPUT);\n  pinMode(IN3, OUTPUT);\n  pinMode(IN4, OUTPUT);\n  pinMode(ENB, OUTPUT);\n\n  Serial.println(\"[ROBO-LAB] Module 1: Obstacle Avoidance Rover Initialized.\");\n  delay(1000);\n}\n\n// SENSE: Calculate distance in centimeters\nint measureDistance() {\n  digitalWrite(TRIG_PIN, LOW);\n  delayMicroseconds(2);\n  digitalWrite(TRIG_PIN, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(TRIG_PIN, LOW);\n\n  long duration = pulseIn(ECHO_PIN, HIGH, 30000); // 30ms timeout\n  if (duration == 0) return 100; // Path clear if timeout\n  return duration * 0.034 / 2;\n}\n\nvoid moveForward() {\n  analogWrite(ENA, 180);\n  analogWrite(ENB, 180);\n  digitalWrite(IN1, HIGH);\n  digitalWrite(IN2, LOW);\n  digitalWrite(IN3, HIGH);\n  digitalWrite(IN4, LOW);\n}\n\nvoid stopMotors() {\n  analogWrite(ENA, 0);\n  analogWrite(ENB, 0);\n  digitalWrite(IN1, LOW);\n  digitalWrite(IN2, LOW);\n  digitalWrite(IN3, LOW);\n  digitalWrite(IN4, LOW);\n}\n\nvoid turnLeft() {\n  analogWrite(ENA, 160);\n  analogWrite(ENB, 160);\n  digitalWrite(IN1, LOW);\n  digitalWrite(IN2, HIGH); // Reverse left\n  digitalWrite(IN3, HIGH);\n  digitalWrite(IN4, LOW);  // Forward right\n}\n\nvoid loop() {\n  // 1. SENSE\n  int distance = measureDistance();\n  Serial.print(\"Sensor Distance: \");\n  Serial.print(distance);\n  Serial.println(\" cm\");\n\n  // 2. PROCESS & 3. DECIDE\n  if (distance < DISTANCE_THRESHOLD) {\n    // 4. ACT: Obstacle detected within 20cm!\n    Serial.println(\"-> DECISION: Obstacle detected! Halting and Turning Left.\");\n    stopMotors();\n    delay(200);\n    turnLeft();\n    delay(400); // Rotate ~45-90 degrees\n  } else {\n    // 4. ACT: Path is clear\n    Serial.println(\"-> DECISION: Path is clear. Cruising Forward.\");\n    moveForward();\n  }\n  delay(100); // 5. SENSE AGAIN in next loop cycle\n}",
+  "output": "[ROBO-LAB] Module 1: Obstacle Avoidance Rover Initialized.\nSensor Distance: 62 cm\n-> DECISION: Path is clear. Cruising Forward.\nSensor Distance: 48 cm\n-> DECISION: Path is clear. Cruising Forward.\nSensor Distance: 31 cm\n-> DECISION: Path is clear. Cruising Forward.\nSensor Distance: 16 cm\n-> DECISION: Obstacle detected! Halting and Turning Left.\nSensor Distance: 55 cm\n-> DECISION: Path is clear. Cruising Forward.",
+  "mcqs": [
+    {
+      "question": "What is the primary role of robotics engineering?",
+      "options": [
+        "To design, build, program, and operate machines that perform tasks autonomously or semi-autonomously",
+        "To build manual non-electric tools",
+        "Only creating video game animations",
+        "Only manufacturing plastic bottles"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Robotics combines mechanical, electrical, and computer engineering to create automated systems."
+    },
+    {
+      "question": "Which component measures real-world physical properties such as distance, light, or temperature?",
+      "options": [
+        "Sensor",
+        "Actuator",
+        "Battery pack",
+        "Chassis plate"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Sensors are input transducers that detect environmental conditions and feed data to the controller."
+    },
+    {
+      "question": "Which component provides mechanical motion to move the robot?",
+      "options": [
+        "Actuator (e.g., Geared DC Motor)",
+        "Ultrasonic transducer",
+        "Voltage regulator",
+        "Microcontroller chip"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Actuators convert electrical energy into physical mechanical movement."
+    },
+    {
+      "question": "What is the core sequence of autonomous robot execution?",
+      "options": [
+        "Sense → Process → Decide → Act",
+        "Act → Sleep → Stop",
+        "Code → Sell → Forget",
+        "Charge → Disassemble → Store"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Sense, Process, Decide, and Act is the universal robotic control feedback loop."
+    }
+  ],
+  "moduleAssessment": {
+    "passingScore": 70,
+    "mcqs": [
+      {
+        "question": "1. Robotics is:",
+        "options": [
+          "Only computer programming and website scripting",
+          "A field combining engineering and technology to design, construct, and operate robots",
+          "Exclusively the study of mechanical steam engines",
+          "Only the retail sale of electronic parts"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Robotics is an interdisciplinary field integrating mechanical, electrical, computer, and systems engineering."
+      },
+      {
+        "question": "2. What does a sensor do in a robotic system?",
+        "options": [
+          "Detects physical information from the environment and sends it as an electrical signal",
+          "Constructs the mechanical frame and chassis",
+          "Stores mechanical spare parts",
+          "Acts as the main battery power supply"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Sensors act as the robot's sensory organs, collecting data such as distance, light, sound, and orientation."
+      },
+      {
+        "question": "3. What is an actuator?",
+        "options": [
+          "A hardware component that produces physical motion or action (e.g. motors, servos)",
+          "A type of programming language compiler",
+          "A battery charging cable",
+          "An optical display screen"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Actuators convert stored electrical energy into physical mechanical work and locomotion."
+      },
+      {
+        "question": "4. Which component acts as the main controller ('brain') in many educational robots?",
+        "options": [
+          "Microcontroller (e.g. Arduino or ESP32)",
+          "Acrylic chassis plate",
+          "Rubber drive wheel",
+          "M3 mechanical screw"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Microcontrollers process inputs, execute firmware logic, and generate output control signals."
+      },
+      {
+        "question": "5. Which sensor measures distance to an obstacle using high-frequency acoustic sound waves?",
+        "options": [
+          "Ultrasonic sensor (e.g. HC-SR04)",
+          "L298N motor driver",
+          "Passive infrared buzzer",
+          "Li-Ion battery pack"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ultrasonic sensors calculate distance using the time-of-flight of 40 kHz acoustic pulses."
+      },
+      {
+        "question": "6. Which type of robot is commonly associated with high-speed repetitive automotive manufacturing?",
+        "options": [
+          "Industrial articulated robot",
+          "Classroom educational kit",
+          "Toy novelty robot",
+          "Consumer robotic dog"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Industrial robots are engineered for high speed, heavy payloads, and sub-millimeter precision on factory lines."
+      },
+      {
+        "question": "7. What does the robotics acronym AMR stand for?",
+        "options": [
+          "Autonomous Mobile Robot",
+          "Automatic Motor Receiver",
+          "Advanced Mechanical Rotor",
+          "Automated Machine Router"
+        ],
+        "correctAnswer": 0,
+        "explanation": "AMR stands for Autonomous Mobile Robot, capable of mapping and navigating dynamic environments."
+      },
+      {
+        "question": "8. Which subsystem is responsible for providing electrical energy to all onboard components?",
+        "options": [
+          "Power system (Battery and voltage regulators)",
+          "Ultrasonic distance sensor",
+          "Acrylic robot chassis",
+          "Software conditional logic"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The power subsystem supplies and regulates the electrical current required by the controller, sensors, and actuators."
+      },
+      {
+        "question": "9. What is the fundamental purpose of a motor driver module?",
+        "options": [
+          "To safely interface low-current controller pins with high-current motors and regulate direction/speed",
+          "To measure ambient room temperature",
+          "To display graphical user interfaces",
+          "To store physical tools"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Motor drivers use H-bridge circuits to amplify control signals and switch motor polarity safely."
+      },
+      {
+        "question": "10. Which of the following components is an example of an Actuator?",
+        "options": [
+          "Servo motor",
+          "Ultrasonic echo receiver",
+          "Light Dependent Resistor (LDR)",
+          "Digital CMOS camera"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A servo motor produces mechanical angular rotation, classifying it directly as an actuator."
+      },
+      {
+        "question": "11. Why are sensors vital to making a machine 'robotic'?",
+        "options": [
+          "They provide real-time information about the environment, enabling the robot to make informed decisions",
+          "They always physically move the wheels directly",
+          "They eliminate the need for a microcontroller",
+          "They serve as structural chassis brackets"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Without sensors, a machine is 'blind' and cannot adapt its behavior to changing environmental conditions."
+      },
+      {
+        "question": "12. What takes place during the 'TEST' phase of the engineering cycle?",
+        "options": [
+          "The engineer experimentally evaluates how the prototype performs against design requirements",
+          "The project is considered immediately finished without verification",
+          "All source code is deleted from the microcontroller",
+          "Sensors are permanently detached"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Testing gathers empirical performance data to determine whether the robot operates reliably and safely."
+      },
+      {
+        "question": "13. What should an engineer do after discovering a flaw or failure during testing?",
+        "options": [
+          "Analyze root causes and improve the design through iterative refinement",
+          "Ignore the problem and ship the product",
+          "Immediately abandon robotics forever",
+          "Remove the failed component without replacement"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Engineers treat failures as valuable data to refine mechanisms, improve code, and harden system reliability."
+      },
+      {
+        "question": "14. Which sequence best describes the continuous autonomous robotic cycle?",
+        "options": [
+          "Sense → Process → Decide → Act",
+          "Act → Sleep → Terminate",
+          "Battery → Wheel → Fastener",
+          "Chassis → Paint → Power off"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Sense → Process → Decide → Act represents the fundamental feedback loop of autonomous systems."
+      },
+      {
+        "question": "15. What is innovation in engineering?",
+        "options": [
+          "Finding novel, improved, or more effective ways to solve human and technical problems",
+          "Duplicating an existing design without modifying any features",
+          "Bypassing testing to save time",
+          "Removing all safety interlocks from a machine"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Innovation involves creative problem solving to make technologies safer, smarter, more efficient, and more accessible."
+      }
+    ]
+  }
+}

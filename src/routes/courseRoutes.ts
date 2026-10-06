@@ -90,7 +90,7 @@ router.get('/', async (req, res) => {
         let filteredModules = allModules;
 
         if (req.query.all !== 'true') {
-            let allowedCourses: string[] = ['no-code-low-code-ai-agents', 'python-ai-course', 'neural-networks-course', 'cqv-course', 'curaquantis-course']; // Default fallback
+            let allowedCourses: string[] = ['no-code-low-code-ai-agents', 'python-ai-course', 'neural-networks-course', 'cqv-course', 'curaquantis-course', 'robot-ai']; // Default fallback
             if (email) {
                 const user = await User.findOne({ email: { $regex: new RegExp(`^${email.trim()}$`, 'i') } });
                 if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
@@ -99,11 +99,15 @@ router.get('/', async (req, res) => {
                         'Neural Networks & Deep Learning': 'neural-networks-course',
                         'Commissioning Qualification and Validation (CQV) Consulting': 'cqv-course',
                         'CuraQuantis Health Clinics — Franchisee Partner Sales & Operations Training Program': 'curaquantis-course',
-                        'No Code Low Code AI Agents': 'no-code-low-code-ai-agents'
+                        'No Code Low Code AI Agents': 'no-code-low-code-ai-agents',
+                        '30-Day Robotics Lab – From Zero to Robot Builder': 'robot-ai',
+                        '30-Day Robotics Lab': 'robot-ai',
+                        '30 day robotic lab': 'robot-ai',
+                        'Robotics 30-Day Hands-on Course': 'robot-ai'
                     };
                     allowedCourses = Array.from(new Set(['no-code-low-code-ai-agents', ...user.enrolledCourses.map(c => titleToIdMap[c] || c)]));
                 } else if (user && user.isPaid) {
-                    allowedCourses = ['no-code-low-code-ai-agents', 'python-ai-course'];
+                    allowedCourses = ['no-code-low-code-ai-agents', 'python-ai-course', 'robot-ai'];
                 }
             }
 
